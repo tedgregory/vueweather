@@ -36,7 +36,7 @@ interface Sy {
   sunset: number;
 }
 
-export interface ApiResponse {
+export interface WeatherApiResponse {
   coord: Coord;
   weather: Weather[];
   base: string;

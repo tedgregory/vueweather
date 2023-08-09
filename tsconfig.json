@@ -21,11 +21,8 @@
         "src/*"
       ],
       "@models/*": [
-        "@/models/*"
+        "./src/models/*"
       ],
-      "@styles/*": [
-        "@/styles/*"
-      ]
     },
     "lib": [
       "esnext",
