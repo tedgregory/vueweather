@@ -1,4 +1,4 @@
-import { LocationsApiResponse } from "@/api/openweather";
+import { LocationsApiResponse } from "@/api/models/locations.model";
 
 export type WeatherLocation = {
   id: number;

@@ -9,5 +9,5 @@ export type WeatherLocation = {
 export interface WeatherDataStorage<T extends WeatherLocation> {
   clearData(): void;
   saveData(data: T[]): void;
-  readData(): T[];
+  readData(): T[] | null;
 }

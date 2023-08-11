@@ -32,12 +32,15 @@
 import { computed } from "vue";
 import * as helpers from "@/utils/weather.helpers";
 import WeatherIcon from "@/components/ui/WeatherIcon.vue";
-import { useFetchWeather } from "@/hooks/useFetchWeather";
-import { WeatherLocation } from "@/api/models";
+import { WeatherLocation } from "@/models/Weather";
+import { useFetchWeather } from "../../hooks/useFetchWeather";
 
 const props = defineProps<{ location: WeatherLocation }>();
+const { data } = await useFetchWeather(props.location);
+
+const weatherData = computed(() => data.value);
+
 const dewPoint = computed(() =>
   helpers.calculateDewPoint(weatherData.value?.main.temp, weatherData.value?.main.humidity)
 );
-const { data: weatherData } = await useFetchWeather<WeatherLocation>(props.location);
 </script>

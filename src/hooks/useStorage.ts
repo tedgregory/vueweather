@@ -1,43 +1,45 @@
-import { WeatherLocation } from "@/api/models";
 import { LocalStorageManager } from "@/api/storage";
-import { Ref, ref } from "vue";
+import { WeatherLocation } from "@/models/Locations";
+import { reactive, watch } from "vue";
 
-export default function useStorage<T extends WeatherLocation>() {
-  const lm = new LocalStorageManager<T>();
-  const data = ref<T[]>([]) as Ref<T[]>;
+interface LocationsState<T extends WeatherLocation> {
+  data: {
+    locations: T[];
+  };
+  add(v: T): void;
+  remove(v: T): void;
+  clear(): void;
+}
 
-  data.value = lm.readData();
-
-  const add = (item: T | Array<T>) => {
+const lm = new LocalStorageManager<WeatherLocation>();
+const storage: LocationsState<WeatherLocation> = reactive({
+  data: reactive({
+    locations: [] as WeatherLocation[],
+  }),
+  add(item) {
     const newData = item instanceof Array ? item : [item];
-    data.value = data.value instanceof Array ? [...data.value, ...newData] : newData;
-    save();
-  };
-
-  const save = () => {
-    lm.saveData(data.value);
-  };
-
-  const remove = (item: T) => {
-    if (data.value instanceof Array) {
-      data.value = data.value.filter(
+    this.data.locations = this.data?.locations?.length
+      ? [...this.data.locations, ...newData]
+      : newData;
+  },
+  remove(item) {
+    if (this.data.locations.length) {
+      this.data.locations = this.data.locations.filter(
         (dataItem) => dataItem.name.toLocaleLowerCase() !== item.name.toLocaleLowerCase()
       );
     }
-    save();
-  };
+  },
+  clear() {
+    this.data.locations = [];
+  },
+});
 
-  const clear = () => {
-    data.value = [];
-    save;
-  };
+storage.data.locations = lm.readData() || [];
 
-  return {
-    data,
-    actions: {
-      add,
-      remove,
-      clear,
-    },
-  };
+export default function useStorage() {
+  watch(storage.data, () => {
+    console.log("state update");
+    lm.saveData(storage.data.locations);
+  });
+  return { data: storage.data, storage };
 }

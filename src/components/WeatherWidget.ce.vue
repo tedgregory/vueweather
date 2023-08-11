@@ -1,5 +1,5 @@
 <script async setup lang="ts">
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import SelectLocation from "./views/SelectLocation.vue";
 
 import SettingsIcon from "@/components/ui/SettingsIcon.vue";
@@ -10,16 +10,19 @@ const isSettings = ref<boolean>(false);
 const toggleSettings = () => {
   isSettings.value = !isSettings.value;
 };
+const { data } = useStorage();
 
-const { data: savedLocations } = useStorage();
+let savedLocations = computed(() => data.locations);
 </script>
 
 <template>
   <div class="weather">
     <div class="weather__wrapper">
       <SettingsIcon :isOpen="isSettings" @click="toggleSettings" />
-      <SelectLocation v-if="isSettings" />
-      <WeatherView :location="loc" v-for="loc of savedLocations" :key="loc.id" />
+      <SelectLocation />
+      <Suspense v-for="loc of savedLocations" :key="loc.id + loc.lat">
+        <WeatherView :location="loc" />
+      </Suspense>
     </div>
   </div>
 </template>

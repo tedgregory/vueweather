@@ -1,6 +1,6 @@
-import { WeatherLocation } from "@/api/models";
-import { LocationsApiResponse, fetchLocationsData } from "@/api/openweather";
-import { LocationsDto } from "@/models/Locations";
+import { LocationsApiResponse } from "@/api/models/locations.model";
+import { fetchLocationsData } from "@/api/openweather";
+import { LocationsDto, WeatherLocation } from "@/models/Locations";
 import { UnwrapRef, ref, watch } from "vue";
 
 export async function useFetchLocations(query = ref<string | null>(null)) {
@@ -22,8 +22,6 @@ export async function useFetchLocations(query = ref<string | null>(null)) {
       }
     }
   };
-  watch(query, (q) => watchHandler(q));
-  // watchHandler(query.value);
-  // return { data: data.value, isLoading: isLoading.value };
+  watch(query, async (q) => await watchHandler(q));
   return { data, isLoading };
 }

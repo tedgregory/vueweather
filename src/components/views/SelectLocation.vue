@@ -2,7 +2,7 @@
   <div class="weather__container">
     <h3>Settings</h3>
     <ul v-if="locations">
-      <li v-for="location of locations" :key="location.id">
+      <li v-for="location of locations" :key="location.lat">
         {{ location.name }} ({{ location.countryCode }})
       </li>
     </ul>
@@ -14,12 +14,16 @@
 </template>
 
 <script setup lang="ts">
+import { WeatherLocation } from "@/models/Locations";
 import AddLocation from "../AddLocation.vue";
-import { WeatherLocation } from "@/api/models";
 import useStorage from "@/hooks/useStorage";
+import { computed } from "vue";
 
-const { data: locations, actions: lsm } = useStorage();
+const { data, storage } = useStorage();
+
+const locations = computed(() => data.locations);
+
 function addLocationToList(location: WeatherLocation) {
-  lsm.add(location);
+  storage.add(location);
 }
 </script>

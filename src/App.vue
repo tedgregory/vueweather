@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <WeatherWidget />
+  <Suspense><WeatherWidget /></Suspense>
 </template>
 
 <script lang="ts">

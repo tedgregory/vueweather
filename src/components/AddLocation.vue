@@ -12,7 +12,7 @@
     <div class="search-form__suggest suggest" v-if="IsSuggestOpen">
       <div v-if="isLoading" class="suggest__preloader">loading ...</div>
       <div v-else-if="data" class="suggest__list">
-        <div v-for="loc of data" :key="loc.id" @click="selectLocation(loc)">
+        <div v-for="loc of data" :key="loc.id + loc.lat" @click="selectLocation(loc)">
           <em>{{ loc.name }}</em> ( {{ loc.countryCode }} )
         </div>
       </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { WeatherLocation } from "@/api/models";
+import { WeatherLocation } from "@/models/Locations";
 import { useFetchLocations } from "../hooks/useFetchLocations";
 import { ref } from "vue";
 const emit = defineEmits<{ "add-location": [locationData: WeatherLocation] }>();
@@ -29,8 +29,8 @@ const emit = defineEmits<{ "add-location": [locationData: WeatherLocation] }>();
 function addLocation() {
   if (selectedLocationOption.value) {
     emit("add-location", selectedLocationOption.value);
+    query.value = selectedLocationOption.value.name;
     selectedLocationOption.value = null;
-    query.value = "";
   }
 }
 
