@@ -1,12 +1,12 @@
 <template>
-  <div class="weather__container">
+  <div class="weather__container locations">
     <h3>Settings</h3>
-    <ul v-if="locations">
-      <li v-for="location of locations" :key="location.lat">
+    <div class="locations__list" v-if="locations">
+      <div class="locations__location" v-for="location of locations" :key="location.lat">
         {{ location.name }} ({{ location.countryCode }})
-      </li>
-    </ul>
-    <div v-else>No areas selected</div>
+      </div>
+    </div>
+    <div v-else>No location selected</div>
     <Suspense>
       <AddLocation @add-location="addLocationToList" />
     </Suspense>
