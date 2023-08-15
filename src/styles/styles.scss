@@ -1,0 +1,117 @@
+@import "./variables.scss";
+
+.weather {
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  &__tools {
+    position: absolute;
+    cursor: pointer;
+    right: 1rem;
+    top: 1rem;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0 1rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 1rem #aaa;
+    border-radius: 1rem;
+    border: 1px solid #555;
+  }
+
+  &__header {
+    font-size: 2rem;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  }
+
+  .splash {
+    display: flex;
+    justify-content: flex-start;
+
+    &__data {
+      margin-left: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -1px;
+    }
+  }
+
+  .details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    &__main {
+      flex-basis: 100%;
+      text-align: center;
+    }
+  }
+  .search-form {
+    position: relative;
+    &__input {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      input {
+        height: 2rem;
+        width: 90%;
+        outline: none;
+        margin: 0;
+      }
+    }
+    &__suggest {
+      position: absolute;
+      top: 2rem;
+      right: 0;
+      left: 0;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px #aaa;
+      background-color: #fff;
+      ul {
+        width: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    .suggest {
+      box-sizing: border-box;
+      &__item {
+        cursor: pointer;
+        &:hover {
+          background-color: $color-active;
+        }
+      }
+      .active {
+        background-color: $color-active;
+      }
+    }
+  }
+}
